@@ -11,15 +11,15 @@ ServerActive=127.0.0.1
 if [ "$(lsb_release -is)" = "Ubuntu" ]; then
     echo "Ubuntu detected, continuing with install."
 
-    apt-get update -y
-    apt-get install zabbix-agent -y
+    apt-get update -y > /dev/null
+    apt-get install zabbix-agent -y > /dev/null
 
     systemctl enable --now zabbix-agent
 elif [ "$(lsb_release -is)" = "Arch" ]; then
     echo "Arch detected, continuing with install."
 
-    apt-get update -y
-    apt-get install zabbix-agent -y
+    apt-get update -y > /dev/null
+    apt-get install zabbix-agent -y > /dev/null
 
     systemctl enable --now zabbix-agent
 else
