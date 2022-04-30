@@ -34,7 +34,7 @@ echo "Zabbix configuration saved at /etc/zabbix/zabbix_agentd.conf."
 ip=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')
 hostname=$(cat /etc/hostname)
 
-systemctl restart zabbix_agent
+systemctl restart zabbix-agent
 echo "Restarted Zabbix agent"
 
 echo "The Zabbix agent has been installed and configured. Your primary IP is $ip and the hostname is $hostname"
