@@ -18,8 +18,8 @@ if [ "$(lsb_release -is)" = "Ubuntu" ]; then
 elif [ "$(lsb_release -is)" = "Arch" ]; then
     echo "Arch detected, continuing with install."
 
-    sudo pacman -Syu > /dev/null
-    yes | sudo pacman -S zabbix-agent > /dev/null
+    pacman -Syu > /dev/null
+    yes | pacman -S zabbix-agent > /dev/null
 
     systemctl enable --now zabbix-agent
 else
