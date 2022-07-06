@@ -22,6 +22,13 @@ elif [ "$(lsb_release -is)" = "Arch" ]; then
     yes | pacman -S zabbix-agent > /dev/null
 
     systemctl enable --now zabbix-agent
+elif [ "$(lsb_release -is)" = "Vyos" ]; then
+    echo "Vyos detected, continuing with install."
+
+    apt update > /dev/null
+    apt install zabbix-agent > /dev/null
+
+    systemctl enable --now zabbix-agent
 else
   echo "Your distribution \"$(lsb_release  -is) $(lsb_release  -rs)\" is not supported."
   exit
