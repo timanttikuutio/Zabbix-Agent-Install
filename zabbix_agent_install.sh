@@ -8,6 +8,8 @@ ListenPort=10050
 ServerActive=127.0.0.1
 "
 
+apt install lsb-release -y
+
 if [ "$(lsb_release -is)" = "Ubuntu" ]; then
     echo "Ubuntu detected, continuing with install."
 
