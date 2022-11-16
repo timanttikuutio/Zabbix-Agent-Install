@@ -1,14 +1,19 @@
+apt install lsb-release -y
+
+if [ -n $1 ]; then
 agent_config="# This is a configuration file for Zabbix agent daemon (Unix)
 LogFile=/var/log/zabbix-agent/zabbix_agentd.log
 LogFileSize=0
 
-Server=192.168.5.32
+Server=$1
 ListenPort=10050
 
 ServerActive=127.0.0.1
 "
-
-apt install lsb-release -y
+else
+echo "Error: please specify your Zabbix server as an argument. Example: bash zabbix_agent_install.sh 192.168.1.61. Replace the IP with your zabbix server."
+exit 1
+fi
 
 if [ "$(lsb_release -is)" = "Ubuntu" ]; then
     echo "Ubuntu detected, continuing with install."
