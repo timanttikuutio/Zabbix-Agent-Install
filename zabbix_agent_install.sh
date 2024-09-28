@@ -60,6 +60,9 @@ fi
 
 echo "$agent_config" > /etc/zabbix/zabbix_agentd.conf
 
+ip=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')
+hostname=$(cat /etc/hostname)
+
 if [ "$2" = "yes" ]; then
     if ! command -v openssl >/dev/null; then
         echo "OpenSSL package is not installed, cannot continue with pre-shared key generation."
@@ -72,18 +75,15 @@ if [ "$2" = "yes" ]; then
 TLSConnect=psk
 TLSAccept=psk
 TLSPSKFile=/etc/zabbix/zabbix_agentd.psk
-TLSPSKIdentity=Zabbix PSK
+TLSPSKIdentity=$hostname
 "
         echo "$updated_agent_config" >> /etc/zabbix/zabbix_agentd.conf
 
-        printf "PSK for the Zabbix agent generated and saved at /etc/zabbix/zabbix_agentd.psk, details below.\n\nPSK identity: Zabbix PSK\nPSK: %s\n\n" "$zabbix_psk"
+        printf "PSK for the Zabbix agent generated and saved at /etc/zabbix/zabbix_agentd.psk, details below.\n\nPSK identity: $hostname\nPSK: %s\n\n" "$zabbix_psk"
     fi
 fi
 
 echo "Zabbix configuration saved at /etc/zabbix/zabbix_agentd.conf."
-
-ip=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')
-hostname=$(cat /etc/hostname)
 
 systemctl restart zabbix-agent
 echo "Restarted Zabbix agent"
