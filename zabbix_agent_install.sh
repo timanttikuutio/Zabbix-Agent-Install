@@ -2,13 +2,15 @@
 
 if [ -n "$1" ]; then
 agent_config="# This is a configuration file for Zabbix agent daemon (Unix)
-LogFile=/var/log/zabbix-agent/zabbix_agentd.log
+PidFile=/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix/zabbix_agentd.log
 LogFileSize=0
 
 Server=$1
 ListenPort=10050
 
-ServerActive=127.0.0.1
+Include=/etc/zabbix/zabbix_agentd.d/*.conf
+
 "
 else
     echo "Error: please specify your Zabbix server as an argument. Example: bash zabbix_agent_install.sh 192.168.1.61. Replace the IP with your zabbix server."
@@ -66,6 +68,7 @@ hostname=$(cat /etc/hostname)
 if [ "$2" = "yes" ]; then
     if ! command -v openssl >/dev/null; then
         echo "OpenSSL package is not installed, cannot continue with pre-shared key generation."
+        exit 1
     else
         zabbix_psk="$(openssl rand -hex 32)"
 
